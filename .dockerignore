@@ -1,0 +1,18 @@
+# Git
+.git
+.gitignore
+
+# Python / Local Environment (CRITICAL TO EXCLUDE)
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Test & Debug Scripts (Don't ship these to prod)
+run_smoke.py
+verify_setup.py
+debug_models.py
+src/utils/tests.py
+
+# Logs
+hypothesi_logs/

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypothesi v2.0 | Autonomous Scientific Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🧬</span>
+                <h1 class="text-xl font-bold tracking-tight text-slate-900">Hypothesi <span class="text-blue-600">v2.0</span></h1>
+            </div>
+            <div class="hidden sm:block text-xs font-medium text-slate-500 uppercase tracking-wide">Production Release</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-3xl mx-auto px-4 py-10 w-full">
+        
+        <!-- Input Card -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8 transition-all duration-300 hover:shadow-md">
+            
+            <div class="mb-4">
+                <label class="block text-base font-semibold text-slate-800 mb-1">Scientific Source Material</label>
+                <p class="text-sm text-slate-500">
+                    Our engine auto-detects the format. You can paste:
+                </p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-xs font-medium text-slate-600">📄 Raw Text</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-xs font-medium text-slate-600">🔗 Public URL</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-xs font-medium text-slate-600">📑 PDF Link</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-xs font-medium text-slate-600">🆔 ArXiv ID</span>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <textarea id="sourceInput" rows="5" 
+                    class="w-full p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm font-mono leading-relaxed resize-y"
+                    placeholder="Example: 2310.06825 OR https://arxiv.org/pdf/2310.06825.pdf OR just paste an abstract here..."></textarea>
+                <div class="absolute bottom-3 right-3 text-xs text-slate-400 pointer-events-none">Auto-Ingest Active</div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-5 gap-4">
+                <label class="flex items-center gap-3 cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" id="useLlm" class="peer sr-only">
+                        <div class="w-10 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </div>
+                    <span class="text-sm font-medium text-slate-600 group-hover:text-slate-800 transition">Enable AI Analysis (Gemini)</span>
+                </label>
+
+                <button onclick="runReview()" id="submitBtn" 
+                    class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-8 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                    <span>Run Analysis</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loader" class="hidden flex flex-col items-center justify-center py-12 animate-in fade-in zoom-in duration-300">
+            <div class="loader mb-6"></div>
+            <h3 class="text-lg font-semibold text-slate-700">Analyzing Document</h3>
+            <div class="flex gap-2 mt-3">
+                <span class="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></span>
+                <span class="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                <span class="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+            </div>
+            <p class="text-sm text-slate-400 mt-4">Identifying Source • Extracting Claims • Verifying Evidence</p>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results" class="hidden space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+            
+            <!-- Score & Breakdown Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <!-- Score Card -->
+                <div class="md:col-span-4 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                    <h3 class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-2">Reliability Score</h3>
+                    <div id="resScore" class="text-6xl font-black text-slate-800 tracking-tight">--</div>
+                    <div id="resScoreText" class="text-xs font-medium text-slate-500 mt-2 bg-slate-50 px-2 py-1 rounded-full">0-100 Scale</div>
+                </div>
+
+                <!-- Score Breakdown / Logic -->
+                <div class="md:col-span-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200 relative flex flex-col justify-center">
+                    <h3 class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-3 flex items-center gap-2">
+                        <span>🧮 Score Logic</span>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded border border-slate-200">Explainability</span>
+                    </h3>
+                    <!-- Injected Explanations -->
+                    <div id="resScoreExplanation" class="space-y-2 text-sm text-slate-600">
+                        <p class="italic text-slate-400">No logic available.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Executive Summary -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-slate-100"></div>
+                <h3 class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-3">Executive Summary</h3>
+                <p id="resSummary" class="text-sm text-slate-700 leading-relaxed text-justify">...</p>
+            </div>
+
+            <!-- Claims & Evidence -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50/50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                        <span class="text-lg">🔍</span> Extracted Claims & Validation
+                    </h3>
+                    <span class="text-xs text-slate-400 font-mono">RAG Pipeline</span>
+                </div>
+                <div id="resClaims" class="divide-y divide-slate-100"></div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-yellow-400">
+                    <h3 class="text-sm font-bold text-slate-800 mb-2">⚠️ Limitations</h3>
+                    <p id="resLimit" class="text-sm text-slate-600">No limitations detected.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-green-500">
+                    <h3 class="text-sm font-bold text-slate-800 mb-2">✅ Recommendation</h3>
+                    <p id="resRec" class="text-sm text-slate-600">No specific recommendation.</p>
+                </div>
+            </div>
+
+            <!-- Raw JSON -->
+            <div class="pt-8 pb-12 text-center border-t border-slate-100">
+                <button onclick="toggleJson()" class="text-xs font-medium text-slate-400 hover:text-blue-600 transition flex items-center justify-center gap-1 mx-auto">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Inspect Raw API Response
+                </button>
+                <pre id="jsonRaw" class="hidden mt-6 text-left bg-slate-900 text-slate-300 p-6 rounded-xl text-xs font-mono overflow-x-auto shadow-inner"></pre>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        async function runReview() {
+            const source = document.getElementById('sourceInput').value.trim();
+            const useLlm = document.getElementById('useLlm').checked;
+            const btn = document.getElementById('submitBtn');
+            const loader = document.getElementById('loader');
+            const results = document.getElementById('results');
+
+            if (!source) return alert("Please input source material (Text, URL, or ArXiv ID).");
+
+            results.classList.add('hidden');
+            loader.classList.remove('hidden');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<span>Processing...</span>';
+
+            try {
+                const response = await fetch('/review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ source: source, use_llm: useLlm })
+                });
+
+                const data = await response.json();
+                if(data.error) throw new Error(data.message || "Unknown error from server");
+                renderResults(data);
+
+            } catch (error) {
+                alert("System Error: " + error.message);
+            } finally {
+                loader.classList.add('hidden');
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                btn.innerHTML = '<span>Run Analysis</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>';
+            }
+        }
+
+        function renderResults(data) {
+            const res = document.getElementById('results');
+            res.classList.remove('hidden');
+
+            // 1. Summaries
+            document.getElementById('resSummary').innerText = data.executive_summary || "Analysis complete, but no summary generated.";
+            document.getElementById('resLimit').innerText = data.limitations || "None detected.";
+            document.getElementById('resRec').innerText = data.recommendation || "Review manually.";
+
+            // 2. Score
+            const score = data.reliability_score || 0;
+            const scoreEl = document.getElementById('resScore');
+            scoreEl.innerText = score;
+            
+            if(score >= 80) scoreEl.className = "text-6xl font-black text-green-600 tracking-tight";
+            else if(score >= 50) scoreEl.className = "text-6xl font-black text-yellow-500 tracking-tight";
+            else scoreEl.className = "text-6xl font-black text-red-500 tracking-tight";
+
+            // 3. SCORE EXPLANATION LOGIC
+            const explainContainer = document.getElementById('resScoreExplanation');
+            const explanation = data.reliability?.explanation || (data.reliability ? data.reliability.explanation : "No calculation details.");
+            
+            // Parse semicolon separated values from Heuristic Agent
+            if (explanation.includes(';')) {
+                const reasons = explanation.split(';');
+                let html = `<ul class="space-y-1.5">`;
+                reasons.forEach(r => {
+                    let trimmed = r.trim();
+                    if(!trimmed) return;
+                    
+                    // Detect positive/negative impacts visually
+                    let icon = "🔹";
+                    let color = "text-slate-600";
+                    
+                    if (trimmed.includes("(+")) { icon = "📈"; color = "text-green-700 font-medium"; }
+                    if (trimmed.includes("(-")) { icon = "📉"; color = "text-red-600 font-medium"; }
+                    if (trimmed.includes("(0)")) { icon = "⚪"; color = "text-slate-400"; }
+
+                    html += `<li class="flex items-start gap-2 ${color}"><span class="mt-0.5 text-[10px]">${icon}</span> <span>${trimmed}</span></li>`;
+                });
+                html += `</ul>`;
+                explainContainer.innerHTML = html;
+            } else {
+                // Plain text (LLM explanation)
+                explainContainer.innerHTML = `<p>${explanation}</p>`;
+            }
+
+            // 4. Claims
+            const claimsContainer = document.getElementById('resClaims');
+            claimsContainer.innerHTML = "";
+            const links = data.evidence_links || [];
+            
+            if (links.length === 0) {
+                claimsContainer.innerHTML = "<div class='p-6 text-sm text-slate-400 italic text-center'>No specific claims could be isolated from this document.</div>";
+            }
+
+            links.forEach(link => {
+                const claimText = link.claim || "Unlabeled Claim";
+                const evidence = link.evidence || [];
+                let evHtml = "";
+                if(evidence.length > 0) {
+                    evHtml = evidence.map(e => {
+                        let badgeClass = "bg-slate-100 text-slate-600 border-slate-200";
+                        let icon = "⚪";
+                        if(e.classification === 'supports') { badgeClass = "bg-green-50 text-green-700 border-green-200"; icon = "✅"; } 
+                        else if(e.classification === 'contradicts') { badgeClass = "bg-red-50 text-red-700 border-red-200"; icon = "❌"; }
+
+                        return `
+                            <div class="mt-3 text-xs ${badgeClass} border p-3 rounded-lg flex gap-3">
+                                <div class="mt-0.5 flex-shrink-0">${icon}</div>
+                                <div>
+                                    <div class="font-bold uppercase tracking-wider text-[10px] mb-1 opacity-80">${e.classification}</div>
+                                    <span class="italic opacity-90">"${e.chunk.substring(0, 160)}..."</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    evHtml = `<div class="mt-3 text-xs bg-slate-50 border border-slate-100 p-2 rounded text-slate-400 italic">No direct evidence chunk retrieved.</div>`;
+                }
+
+                claimsContainer.innerHTML += `
+                    <div class="p-6 hover:bg-slate-50 transition duration-150">
+                        <div class="flex items-start gap-4">
+                            <div class="min-w-[24px] h-6 flex items-center justify-center bg-blue-100 text-blue-700 text-xs font-bold rounded-full mt-0.5">C</div>
+                            <div class="flex-grow">
+                                <p class="text-sm text-slate-900 font-medium leading-relaxed">${claimText}</p>
+                                ${evHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('jsonRaw').innerText = JSON.stringify(data, null, 2);
+            res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function toggleJson() { document.getElementById('jsonRaw').classList.toggle('hidden'); }
+    </script>
+</body>
+</html>
