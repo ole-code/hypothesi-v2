@@ -107,30 +107,26 @@ hypothesi-v2/
 
 Prerequisites: Python 3.10+, Google AI Studio API Key.
 
-Clone the repository
+### Clone the repository
 
 code
-Bash
-download
-content_copy
-expand_less
+```text
 git clone https://github.com/YOUR_USERNAME/hypothesi-v2.git
 cd hypothesi-v2
+```
 
-Set up Environment
+### Set up Environment
 
 code
-Bash
-download
-content_copy
-expand_less
+```text
 python -m venv venv
 ## Windows:
 venv\Scripts\activate
 ## Mac/Linux:
 source venv/bin/activate
+```
 
-Install Dependencies
+### Install Dependencies
 
 code
 ```text 
@@ -141,7 +137,7 @@ expand_less
 pip install -r requirements.txt
 ```
 
-Configure Secrets
+### Configure Secrets
 Create a .env file in the root directory:
 
 code
@@ -153,7 +149,7 @@ GEMINI_API_KEY=your_key_starts_with_AIza...
 HYPOTHESI_RUNTIME_MODE=local
 ```
 
-Run the App
+### Run the App
 
 python main.py
 
