@@ -1,3 +1,7 @@
+Here is the full, corrected README.md file. I have fixed the Mermaid syntax error, inserted your specific Cloud Run link, and removed the screenshot placeholders as requested.
+You can copy and paste this directly into your repository.
+code
+Markdown
 # 🧬 Hypothesi v2.0
 **The Autonomous Scientific Review, Evidence Validation & Reliability Assessment System**
 
@@ -13,14 +17,16 @@
 
 ---
 
-## 🔗 [Try the Live Demo] https://hypothesi-v2-953280003622.us-central1.run.app/
+## 🔗 [Try the Live Demo](https://hypothesi-v2-953280003622.us-central1.run.app/)
 *(Note: Paste a URL, raw text, or ArXiv ID to trigger the autonomous review)*
+
+---
 
 ## 📖 The Problem & Solution
 
-**The Problem:** Modern research output is overwhelming. Researchers and students are drowning in PDFs. Traditional AI summarizers only tell you *what* a paper says—they don't tell you *if it's reliable*. They often hallucinate details or gloss over methodological weaknesses.
+**The Problem:** Modern research output is overwhelming. Researchers and students are drowning in PDFs. Traditional AI summarisers only tell you *what* a paper says—they don't tell you *if it's reliable*. They often hallucinate details or gloss over methodological weaknesses.
 
-**The Solution:** Hypothesi acts as an **Autonomous Auditor**. It doesn't just summarize; it deconstructs the paper into atomic claims and hunts for specific evidence chunks to support or refute them.
+**The Solution:** Hypothesi acts as an **Autonomous Auditor**. It doesn't just summarise; it deconstructs the paper into atomic claims and hunts for specific evidence chunks to support or refute them.
 
 ---
 
@@ -31,40 +37,15 @@ Instead of using high-level wrappers (like LangChain or AutoGen), Hypothesi uses
 *   **Reason:** Scientific verification requires **auditability** and **determinism**.
 *   **Benefit:** This enables a **Hybrid Intelligence Engine**. If the LLM (Gemini) is offline or hallucinates invalid JSON, the system automatically switches to **Deterministic Heuristics** (Regex/Vector Search). This ensures the pipeline **Fail-Safes** rather than crashing.
 
-### 2. The Sequential Agent Pipeline
-We utilize a linear dependency chain where Agent A's output is Agent B's input.
-
-```mermaid
-graph TD
-    User[User Input] --> Dispatcher{Auto-Dispatch}
-    Dispatcher -->|ArXiv ID| ArXiv[ArXiv API Tool]
-    Dispatcher -->|URL/PDF| Web[Web/PDF Tool]
-    
-    ArXiv & Web --> CleanText
-    
-    CleanText --> Orch[Orchestrator]
-    
-    Orch --> A1[Structure Agent]
-    A1 --> A2[Claim Extraction Agent]
-    A2 --> A3[Evidence Linking Agent]
-    
-    subgraph "Verification Loop"
-    A3 --> RAG[Vector Search]
-    RAG --> Check[Support/Contradict]
-    end
-    
-    Check --> A4[Reliability Scoring]
-    A4 --> A5[Meta-Reviewer]
-    
-    A5 --> FinalJSON
-🧮 The Scoring Logic (Deterministic)
+### 2. 🧮 The Scoring Logic (Deterministic)
 We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hypothesi uses a Deterministic Algorithm based on the findings of the agents:
 +30 Points: Methods section is present and substantial.
 +20 Points: Results section is present.
 +50 Points (Variable): Percentage of claims explicitly backed by textual evidence (RAG verification).
 -20 Points (Penalty): For every specific contradiction found in the text.
 This ensures the score reflects structural integrity and consistency, not just how "well-written" the abstract is.
-📂 Project Structure
+
+### 3.📂 Project Structure
 This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
 code
 Text
@@ -80,7 +61,7 @@ hypothesi-v2/
 │   │   ├── claims.py       # Claim Isolation Agent
 │   │   ├── evidence.py     # RAG Verification Agent
 │   │   ├── reliability.py  # Scoring Math Agent
-│   │   └── meta_reviewer.py # Final Report Synthesizer
+│   │   └── meta_reviewer.py # Final Report Synthesiser
 │   │
 │   ├── core/               # The Brain
 │   │   ├── orchestrator.py # Pipeline Manager
@@ -89,7 +70,8 @@ hypothesi-v2/
 │   │   └── observability/  # JSONL Logging & Error Tracking
 │   │
 │   └── static/             # Frontend (HTML + Tailwind CSS)
-⚡ Quick Start (Local Development)
+
+### 4.⚡ Quick Start (Local Development)
 Prerequisites: Python 3.10+, Google AI Studio API Key.
 Clone the repository
 code
@@ -120,13 +102,13 @@ Bash
 python main.py
 Visit http://localhost:8080 to access the UI.
 ☁️ Deployment (Google Cloud Run)
-This project is containerized and optimized for Serverless deployment.
+This project is containerised and optimised for Serverless deployment.
 code
 Bash
-# 1. Set Project
+# 4.1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
-# 2. Deploy
+# 4.2. Deploy
 gcloud run deploy hypothesi-v2 \
   --source . \
   --platform managed \
@@ -135,6 +117,7 @@ gcloud run deploy hypothesi-v2 \
   --memory 2Gi \
   --set-env-vars HYPOTHESI_RUNTIME_MODE=prod
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
-🛡️ License
+# 4.3🛡️ License
 This project is open-source under the MIT License.
 code
+Code
