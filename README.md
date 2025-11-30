@@ -88,10 +88,6 @@ This ensures the score reflects structural integrity and consistency, not just h
 
 This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
 
-## 📂 Project Structure
-
-This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
-
 ```text
 hypothesi-v2/
 ├── main.py                 # FastAPI Entry Point & Routes
@@ -116,7 +112,7 @@ hypothesi-v2/
 │   └── static/             # Frontend (HTML + Tailwind CSS)
 ```
 
-## ⚡ Quick Start (Local Development)
+## 5.⚡Quick Start (Local Development)
 
 Prerequisites: Python 3.10+, Google AI Studio API Key.
 
@@ -138,9 +134,9 @@ download
 content_copy
 expand_less
 python -m venv venv
-# Windows:
+## Windows:
 venv\Scripts\activate
-# Mac/Linux:
+## Mac/Linux:
 source venv/bin/activate
 
 Install Dependencies
@@ -169,7 +165,7 @@ python main.py
 
 Visit http://localhost:8080 to access the UI.
 
-### 5. ☁️ Deployment (Google Cloud Run)
+# 6. ☁️ Deployment (Google Cloud Run)
 
 This project is containerised and optimised for Serverless deployment.
 
@@ -178,10 +174,10 @@ Bash
 download
 content_copy
 expand_less
-# 1. Set Project
+## 1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
-# 2. Deploy
+## 2. Deploy
 gcloud run deploy hypothesi-v2 \
   --source . \
   --platform managed \
@@ -192,7 +188,7 @@ gcloud run deploy hypothesi-v2 \
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
-### 6. 🛡️ License
+# 6. 🛡️ License
 
 This project is open-source under the MIT License.
 
