@@ -142,22 +142,25 @@ source venv/bin/activate
 Install Dependencies
 
 code
+```text 
 Bash
 download
 content_copy
 expand_less
 pip install -r requirements.txt
+```
 
 Configure Secrets
 Create a .env file in the root directory:
 
 code
-Text
+```text
 download
 content_copy
 expand_less
 GEMINI_API_KEY=your_key_starts_with_AIza...
 HYPOTHESI_RUNTIME_MODE=local
+```
 
 Run the App
 
@@ -170,10 +173,13 @@ Visit http://localhost:8080 to access the UI.
 This project is containerised and optimised for Serverless deployment.
 
 code
+```text
 Bash
 download
 content_copy
 expand_less
+```
+
 ## 6.1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
