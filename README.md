@@ -13,7 +13,7 @@
 
 ---
 
-## 🔗 [Try the Live Demo] 
+## 🔗 Try the Live Demo 
 git inithttps://hypothesi-v2-953280003622.us-central1.run.app/
 
 ## 📖 The Problem & Solution
