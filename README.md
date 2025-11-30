@@ -1,3 +1,12 @@
+Here is the full, corrected README.md file. I have fixed the Mermaid syntax error, inserted your specific Cloud Run link, and removed the screenshot placeholders as requested.
+
+You can copy and paste this directly into your repository.
+
+code
+Markdown
+download
+content_copy
+expand_less
 # 🧬 Hypothesi v2.0
 **The Autonomous Scientific Review, Evidence Validation & Reliability Assessment System**
 
@@ -60,16 +69,28 @@ graph TD
     
     A5 --> FinalJSON
 🧮 The Scoring Logic (Deterministic)
+
 We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hypothesi uses a Deterministic Algorithm based on the findings of the agents:
+
 +30 Points: Methods section is present and substantial.
+
 +20 Points: Results section is present.
+
 +50 Points (Variable): Percentage of claims explicitly backed by textual evidence (RAG verification).
+
 -20 Points (Penalty): For every specific contradiction found in the text.
+
 This ensures the score reflects structural integrity and consistency, not just how "well-written" the abstract is.
+
 📂 Project Structure
+
 This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
+
 code
 Text
+download
+content_copy
+expand_less
 hypothesi-v2/
 ├── main.py                 # FastAPI Entry Point & Routes
 ├── Dockerfile              # Cloud Run Container Configuration
@@ -92,39 +113,72 @@ hypothesi-v2/
 │   │
 │   └── static/             # Frontend (HTML + Tailwind CSS)
 ⚡ Quick Start (Local Development)
+
 Prerequisites: Python 3.10+, Google AI Studio API Key.
+
 Clone the repository
+
 code
 Bash
+download
+content_copy
+expand_less
 git clone https://github.com/YOUR_USERNAME/hypothesi-v2.git
 cd hypothesi-v2
+
 Set up Environment
+
 code
 Bash
+download
+content_copy
+expand_less
 python -m venv venv
 # Windows:
 venv\Scripts\activate
 # Mac/Linux:
 source venv/bin/activate
+
 Install Dependencies
+
 code
 Bash
+download
+content_copy
+expand_less
 pip install -r requirements.txt
+
 Configure Secrets
 Create a .env file in the root directory:
+
 code
 Text
+download
+content_copy
+expand_less
 GEMINI_API_KEY=your_key_starts_with_AIza...
 HYPOTHESI_RUNTIME_MODE=local
+
 Run the App
+
 code
 Bash
+download
+content_copy
+expand_less
 python main.py
+
 Visit http://localhost:8080 to access the UI.
+
 ☁️ Deployment (Google Cloud Run)
+
 This project is containerised and optimised for Serverless deployment.
+
 code
 Bash
+download
+content_copy
+expand_less
 # 1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
@@ -136,6 +190,15 @@ gcloud run deploy hypothesi-v2 \
   --allow-unauthenticated \
   --memory 2Gi \
   --set-env-vars HYPOTHESI_RUNTIME_MODE=prod
+
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
+
 🛡️ License
+
 This project is open-source under the MIT License.
+
+code
+Code
+download
+content_copy
+expand_less
