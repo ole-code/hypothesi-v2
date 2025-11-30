@@ -57,3 +57,84 @@ graph TD
     A4 --> A5[Meta-Reviewer]
     
     A5 --> FinalJSON
+
+    🧮 The Scoring Logic (Deterministic)
+We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hypothesi uses a Deterministic Algorithm based on the findings of the agents:
++30 Points: Methods section is present and substantial.
++20 Points: Results section is present.
++50 Points (Variable): Percentage of claims explicitly backed by textual evidence (RAG verification).
+-20 Points (Penalty): For every specific contradiction found in the text.
+This ensures the score reflects structural integrity and consistency, not just how "well-written" the abstract is.
+📂 Project Structure
+This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
+code
+Text
+hypothesi-v2/
+├── main.py                 # FastAPI Entry Point & Routes
+├── Dockerfile              # Cloud Run Container Configuration
+├── requirements.txt        # Python Dependencies
+├── .env                    # Local Secrets (Not uploaded to Prod)
+├── src/
+│   ├── agents/             # The Logic Layer (The "Workers")
+│   │   ├── ingestion/      # PDF, URL, ArXiv Auto-Dispatcher
+│   │   ├── structure.py    # Structure Extraction Agent
+│   │   ├── claims.py       # Claim Isolation Agent
+│   │   ├── evidence.py     # RAG Verification Agent
+│   │   ├── reliability.py  # Scoring Math Agent
+│   │   └── meta_reviewer.py # Final Report Synthesizer
+│   │
+│   ├── core/               # The Brain
+│   │   ├── orchestrator.py # Pipeline Manager
+│   │   ├── context/        # Memory, Session & Chunking Engine
+│   │   ├── tools/          # Embeddings, Sanitizers, LLM Wrappers
+│   │   └── observability/  # JSONL Logging & Error Tracking
+│   │
+│   └── static/             # Frontend (HTML + Tailwind CSS)
+⚡ Quick Start (Local Development)
+Prerequisites: Python 3.10+, Google AI Studio API Key.
+Clone the repository
+code
+Bash
+git clone https://github.com/YOUR_USERNAME/hypothesi-v2.git
+cd hypothesi-v2
+Set up Environment
+code
+Bash
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
+Install Dependencies
+code
+Bash
+pip install -r requirements.txt
+Configure Secrets
+Create a .env file in the root directory:
+code
+Text
+GEMINI_API_KEY=your_key_starts_with_AIza...
+HYPOTHESI_RUNTIME_MODE=local
+Run the App
+code
+Bash
+python main.py
+Visit http://localhost:8080 to access the UI.
+☁️ Deployment (Google Cloud Run)
+This project is containerized and optimized for Serverless deployment.
+code
+Bash
+# 1. Set Project
+gcloud config set project YOUR_PROJECT_ID
+
+# 2. Deploy
+gcloud run deploy hypothesi-v2 \
+  --source . \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --memory 2Gi \
+  --set-env-vars HYPOTHESI_RUNTIME_MODE=prod
+Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
+🛡️ License
+This project is open-source under the MIT License.
