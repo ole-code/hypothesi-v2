@@ -174,10 +174,10 @@ Bash
 download
 content_copy
 expand_less
-## 1. Set Project
+## 6.1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
-## 2. Deploy
+## 6.2. Deploy
 gcloud run deploy hypothesi-v2 \
   --source . \
   --platform managed \
@@ -188,7 +188,7 @@ gcloud run deploy hypothesi-v2 \
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
-# 6. 🛡️ License
+# 7. 🛡️ License
 
 This project is open-source under the MIT License.
 
