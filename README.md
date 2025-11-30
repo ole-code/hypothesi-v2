@@ -13,19 +13,7 @@
 
 ---
 
-## 🔗 [Try the Live Demo](YOUR_CLOUD_RUN_URL_HERE)
-*(Note: Paste a URL, raw text, or ArXiv ID to trigger the autonomous review)*
-
----
-
-## 📸 System Preview
-
-| **Smart Auto-Ingestion** | **Transparent Scoring Logic** |
-|:---:|:---:|
-| *Auto-detects ArXiv IDs, PDFs, and URLs.* | *Explains the math behind the reliability score.* |
-| ![Input Dashboard](https://placehold.co/600x400?text=Screenshot:+Input+Dashboard) | ![Score Logic](https://placehold.co/600x400?text=Screenshot:+Score+Panel) |
-
----
+## 🔗 [Try the Live Demo] https://hypothesi-v2-953280003622.us-central1.run.app/
 
 ## 📖 The Problem & Solution
 
