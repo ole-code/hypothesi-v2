@@ -191,9 +191,3 @@ Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secre
 # 7. 🛡️ License
 
 This project is open-source under the MIT License.
-
-code
-Code
-download
-content_copy
-expand_less
