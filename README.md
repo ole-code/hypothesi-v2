@@ -13,8 +13,8 @@
 
 ---
 
-## 🔗 Try the Live Demo 
-https://hypothesi-v2-953280003622.us-central1.run.app/
+## 🔗 [Try the Live Demo] https://hypothesi-v2-953280003622.us-central1.run.app/
+*(Note: Paste a URL, raw text, or ArXiv ID to trigger the autonomous review)*
 
 ## 📖 The Problem & Solution
 
@@ -57,8 +57,7 @@ graph TD
     A4 --> A5[Meta-Reviewer]
     
     A5 --> FinalJSON
-
-    🧮 The Scoring Logic (Deterministic)
+🧮 The Scoring Logic (Deterministic)
 We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hypothesi uses a Deterministic Algorithm based on the findings of the agents:
 +30 Points: Methods section is present and substantial.
 +20 Points: Results section is present.
@@ -138,3 +137,4 @@ gcloud run deploy hypothesi-v2 \
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 🛡️ License
 This project is open-source under the MIT License.
+code
