@@ -68,7 +68,9 @@ graph TD
     A4 --> A5[Meta-Reviewer]
     
     A5 --> FinalJSON
-🧮 The Scoring Logic (Deterministic)
+```
+
+### 3.🧮 The Scoring Logic (Deterministic) 
 
 We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hypothesi uses a Deterministic Algorithm based on the findings of the agents:
 
@@ -82,7 +84,7 @@ We do not ask the LLM to "rate this paper 1-10." LLM ratings are subjective. Hyp
 
 This ensures the score reflects structural integrity and consistency, not just how "well-written" the abstract is.
 
-📂 Project Structure
+### 4. 📂 Project Structure
 
 This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
 
@@ -170,7 +172,7 @@ python main.py
 
 Visit http://localhost:8080 to access the UI.
 
-☁️ Deployment (Google Cloud Run)
+### 5. ☁️ Deployment (Google Cloud Run)
 
 This project is containerised and optimised for Serverless deployment.
 
@@ -193,7 +195,7 @@ gcloud run deploy hypothesi-v2 \
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
-🛡️ License
+### 6. 🛡️ License
 
 This project is open-source under the MIT License.
 
