@@ -1,12 +1,3 @@
-Here is the full, corrected README.md file. I have fixed the Mermaid syntax error, inserted your specific Cloud Run link, and removed the screenshot placeholders as requested.
-
-You can copy and paste this directly into your repository.
-
-code
-Markdown
-download
-content_copy
-expand_less
 # 🧬 Hypothesi v2.0
 **The Autonomous Scientific Review, Evidence Validation & Reliability Assessment System**
 
