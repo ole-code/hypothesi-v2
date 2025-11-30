@@ -179,6 +179,6 @@ While the current v2.0 architecture creates a robust functional baseline, the fo
 2.  **SSRF Hardening:** The URL Ingestion tool currently allows open access to facilitate broad research. Production versions will implement a strict "Allowlist" middleware to block internal metadata IP ranges.
 3.  **Prompt Hardening:** While Regex sanitizers are in place, we plan to implement a secondary "Guardrail Agent" (e.g., NVIDIA NeMo Guardrails) to further filter adversarial prompt injections.
 
-#### 8. 🛡️ License
+## 8. 🛡️ License
 
 This project is open-source under the MIT License.
