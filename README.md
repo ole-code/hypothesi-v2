@@ -103,11 +103,11 @@ hypothesi-v2/
 │   └── static/             # Frontend (HTML + Tailwind CSS)
 ```
 
-## 5.⚡Quick Start (Local Development)
+### 5.⚡Quick Start (Local Development)
 
 Prerequisites: Python 3.10+, Google AI Studio API Key.
 
-### Clone the repository
+#### Clone the repository
 
 code
 ```text
@@ -115,7 +115,7 @@ git clone https://github.com/YOUR_USERNAME/hypothesi-v2.git
 cd hypothesi-v2
 ```
 
-### Set up Environment
+#### Set up Environment
 
 code
 ```text
@@ -128,14 +128,14 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### Install Dependencies
+#### Install Dependencies
 
 code
 ```text 
 pip install -r requirements.txt
 ```
 
-### Configure Secrets
+#### Configure Secrets
 Create a .env file in the root directory:
 
 code
@@ -144,22 +144,22 @@ GEMINI_API_KEY=your_key_starts_with_AIza...
 HYPOTHESI_RUNTIME_MODE=local
 ```
 
-### Run the App
+#### Run the App
 
 python main.py
 
 Visit http://localhost:8080 to access the UI.
 
-# 6. ☁️ Deployment (Google Cloud Run)
+### 6. ☁️ Deployment (Google Cloud Run)
 
 This project is containerised and optimised for Serverless deployment.
 
-## 6.1. Set Project
+#### 6.1. Set Project
 ```text
 gcloud config set project YOUR_PROJECT_ID
 ```
 
-## 6.2. Deploy
+#### 6.2. Deploy
 ```text
 gcloud run deploy hypothesi-v2 \
   --source . \
@@ -172,6 +172,6 @@ gcloud run deploy hypothesi-v2 \
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
-# 7. 🛡️ License
+#### 7. 🛡️ License
 
 This project is open-source under the MIT License.
