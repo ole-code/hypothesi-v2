@@ -88,11 +88,11 @@ This ensures the score reflects structural integrity and consistency, not just h
 
 This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
 
-code
-Text
-download
-content_copy
-expand_less
+## 📂 Project Structure
+
+This project follows a modular, production-grade directory structure suitable for CI/CD pipelines.
+
+```text
 hypothesi-v2/
 ├── main.py                 # FastAPI Entry Point & Routes
 ├── Dockerfile              # Cloud Run Container Configuration
@@ -114,7 +114,9 @@ hypothesi-v2/
 │   │   └── observability/  # JSONL Logging & Error Tracking
 │   │
 │   └── static/             # Frontend (HTML + Tailwind CSS)
-⚡ Quick Start (Local Development)
+```
+
+## ⚡ Quick Start (Local Development)
 
 Prerequisites: Python 3.10+, Google AI Studio API Key.
 
@@ -163,11 +165,6 @@ HYPOTHESI_RUNTIME_MODE=local
 
 Run the App
 
-code
-Bash
-download
-content_copy
-expand_less
 python main.py
 
 Visit http://localhost:8080 to access the UI.
