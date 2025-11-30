@@ -120,8 +120,10 @@ cd hypothesi-v2
 code
 ```text
 python -m venv venv
+
 ## Windows:
 venv\Scripts\activate
+
 ## Mac/Linux:
 source venv/bin/activate
 ```
@@ -130,10 +132,6 @@ source venv/bin/activate
 
 code
 ```text 
-Bash
-download
-content_copy
-expand_less
 pip install -r requirements.txt
 ```
 
