@@ -142,9 +142,6 @@ Create a .env file in the root directory:
 
 code
 ```text
-download
-content_copy
-expand_less
 GEMINI_API_KEY=your_key_starts_with_AIza...
 HYPOTHESI_RUNTIME_MODE=local
 ```
@@ -159,18 +156,13 @@ Visit http://localhost:8080 to access the UI.
 
 This project is containerised and optimised for Serverless deployment.
 
-code
+## 6.1. Set Project
 ```text
-Bash
-download
-content_copy
-expand_less
+gcloud config set project YOUR_PROJECT_ID
 ```
 
-## 6.1. Set Project
-gcloud config set project YOUR_PROJECT_ID
-
 ## 6.2. Deploy
+```text
 gcloud run deploy hypothesi-v2 \
   --source . \
   --platform managed \
@@ -178,6 +170,7 @@ gcloud run deploy hypothesi-v2 \
   --allow-unauthenticated \
   --memory 2Gi \
   --set-env-vars HYPOTHESI_RUNTIME_MODE=prod
+```
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
