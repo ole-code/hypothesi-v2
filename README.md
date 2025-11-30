@@ -82,9 +82,9 @@ Set up Environment
 code
 Bash
 python -m venv venv
-# Windows:
+### Windows:
 venv\Scripts\activate
-# Mac/Linux:
+### Mac/Linux:
 source venv/bin/activate
 Install Dependencies
 code
@@ -105,10 +105,10 @@ Visit http://localhost:8080 to access the UI.
 This project is containerised and optimised for Serverless deployment.
 code
 Bash
-# 4.1. Set Project
+### 4.1. Set Project
 gcloud config set project YOUR_PROJECT_ID
 
-# 4.2. Deploy
+### 4.2. Deploy
 gcloud run deploy hypothesi-v2 \
   --source . \
   --platform managed \
@@ -117,7 +117,7 @@ gcloud run deploy hypothesi-v2 \
   --memory 2Gi \
   --set-env-vars HYPOTHESI_RUNTIME_MODE=prod
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
-# 4.3🛡️ License
+### 4.3.🛡️ License
 This project is open-source under the MIT License.
 code
 Code
