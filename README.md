@@ -172,6 +172,13 @@ gcloud run deploy hypothesi-v2 \
 
 Note: Don't forget to set the GEMINI_API_KEY in the Cloud Run "Variables & Secrets" tab after deployment.
 
-#### 7. 🛡️ License
+## 7.⚠️ Security & Future Roadmap (Post-MVP)
+While the current v2.0 architecture creates a robust functional baseline, the following security enhancements are planned for the enterprise release:
+
+1.  **Rate Limiting:** Currently handled via Cloud Run concurrency limits. Future updates will implement application-level Redis rate limiting to prevent abuse.
+2.  **SSRF Hardening:** The URL Ingestion tool currently allows open access to facilitate broad research. Production versions will implement a strict "Allowlist" middleware to block internal metadata IP ranges.
+3.  **Prompt Hardening:** While Regex sanitizers are in place, we plan to implement a secondary "Guardrail Agent" (e.g., NVIDIA NeMo Guardrails) to further filter adversarial prompt injections.
+
+#### 8. 🛡️ License
 
 This project is open-source under the MIT License.
